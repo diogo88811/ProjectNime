@@ -5,8 +5,8 @@ let songNumber;
 
 function preload(){
   soundFormats('mp3', 'ogg');
-  song1 = loadSound('/Musicas/Phoenix_RDC_Dureza_[Video_Oficial].mp3');
-  song2 = loadSound('/Musicas/ProfJam_Água_de_Coco_(Prod_Lhast)[1].mp3');
+  song1 = loadSound('Musicas/Phoenix_RDC_Dureza_[Video_Oficial].mp3');
+  song2 = loadSound('Musicas/ProfJam_Água_de_Coco_(Prod_Lhast)[1].mp3');
   songNumber = 0;
 
   queue[0] = song1;
