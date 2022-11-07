@@ -1,0 +1,16 @@
+Things to change from the low fidelity prototype:
+	-Add labels/symbols to the volume, tempo and effect buttons
+	-Add small queue to dj side
+	
+List of work:
+
+Search 
+	-Search on libraries and tools to use
+	-Get images, icons, songs
+Code
+	-Changing tempo and volume
+	-Add a song to the queue
+	-Search a song
+	-SKip song
+	-Use the disks
+	-Sound effects (sfx 
