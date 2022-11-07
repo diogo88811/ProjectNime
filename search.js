@@ -8,7 +8,7 @@ function setup() {
     searchButton.position(40,40);
     searchButton.mousePressed(searchEvent);
 
-    img = loadImage('Pictures/DjDisk.png');
+    img = loadImage('Pictures/DJDisk.png');
 
   }
   
