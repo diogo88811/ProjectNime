@@ -1,4 +1,5 @@
-let disk;
+var disk;
+var irotate;
 function preload(){
     disk = loadImage('Pictures/DJDisk.png');
 }
@@ -14,14 +15,17 @@ function setup() {
 
     imageMode(CENTER);
     angleMode(CENTER);
+    irotate = 0;
 
 
   }
   
 function draw() {
-    image(disk, (6*windowWidth)/8, windowHeight/4, windowHeight/3, windowHeight/3);
-    image(disk, (6*windowWidth)/8, (3*windowHeight)/4, windowHeight/3, windowHeight/3);
-
+    image(disk, (6*windowWidth)/8, 0.3*windowHeight, 0.28*windowHeight, 0.28*windowHeight);
+    image(disk, (6*windowWidth)/8, (1-0.3)*windowHeight, 0.28*windowHeight, 0.28*windowHeight);
+    
+    irotate++;
+    rotate(irotate);
 }
 
 function typeMusicEvent(){
