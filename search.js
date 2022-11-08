@@ -1,32 +1,36 @@
-var disk;
+var disk1;
+var disk2;
 var irotate;
 
 function preload(){
-    disk = loadImage('Pictures/DJDisk.png');
+    disk1 = loadImage('Pictures/DJDisk.png');
+    disk2 = loadImage('Pictures/DJDisk.png');
 }
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    input = createInput();
-    input.position(20,65);
-    input.input(typeMusicEvent);
-    
-    searchButton = createButton("Search");
-    searchButton.position(40,40);
-    searchButton.mousePressed(searchEvent);
 
     imageMode(CENTER);
     angleMode(DEGREES);  
     irotate = 0;
-    image(disk, (6*windowWidth)/8, 0.3*windowHeight, 0.28*windowHeight, 0.28*windowHeight);
-    image(disk, (6*windowWidth)/8, (1-0.3)*windowHeight, 0.28*windowHeight, 0.28*windowHeight);
+    
 
 
   }
   
-function draw() {    
-    
+function draw() { 
+    background(220);  
+    push()
+    translate((6*windowWidth)/8, 0.3*windowHeight)
     irotate++;
     rotate(irotate);
+    image(disk1, 0,0, 0.28*windowHeight, 0.28*windowHeight);
+    pop()
+    
+    translate((6*windowWidth)/8, (1-0.3)*windowHeight)
+    irotate++;
+    rotate(irotate);
+    image(disk2, 0, 0, 0.28*windowHeight, 0.28*windowHeight);
+    
 }
 
 function typeMusicEvent(){
