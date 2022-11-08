@@ -12,11 +12,16 @@ function setup() {
     searchButton.position(40,40);
     searchButton.mousePressed(searchEvent);
 
+    imageMode(CENTER);
+    angleMode(CENTER);
+
 
   }
   
 function draw() {
-    image(disk, (5*windowWidth)/6, windowHeight/4, windowHeight/6, windowHeight/6);
+    image(disk, (5*windowWidth)/7, windowHeight/4, windowHeight/5, windowHeight/5);
+    image(disk, (5*windowWidth)/6, (3*windowHeight)/4, windowHeight/5, windowHeight/5);
+
 }
 
 function typeMusicEvent(){
