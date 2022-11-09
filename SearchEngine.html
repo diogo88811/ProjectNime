@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+    <link rel="stylesheet" href="SearchEngine.css">
+    <title>Search Song</title>
+  </head>
+  <body>
+    <div class="form-container">
+
+                  <input id="search" type="text" class="input" placeholder="search..." style="background-image: url('/Pictures/searchicon.png'); background-repeat: no-repeat;"/>
+                  <button id="clear" class="clear-results">clear</button>
+
+    </div>
+    <div class="results-container">
+       <ul class="results-list" id="list" style="list-style: none;">
+
+       </ul>
+    </div>
+    <div>
+        <script src="SearchEngine.js"></script>
+    </div>
+  </body>
+</html>
