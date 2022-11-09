@@ -10,6 +10,19 @@ var sliderVolume1;
 var sliderVolume2;
 var sliderTransition;
 
+//Change music buttons
+var changeBtn1;
+var changeBtn2;
+var changeBtn3;
+var button1_pressed= false;
+var button2_pressed = false;
+var button3_pressed = false;
+
+//Lights
+var light1;
+var light2;
+var light3;
+
 //Songs
 let song1;
 let song2;
@@ -17,7 +30,9 @@ let queue = [];
 let songNumber;
 var b;
 var amp;
-var volhistory = [];
+var img;
+var particles = [];
+var fft;
 
 
 function preload(){
@@ -25,9 +40,11 @@ function preload(){
     disk2 = loadImage('Pictures/DJDisk.png');
 
     soundFormats('mp3', 'ogg');
-    song1 = loadSound('Musicas/Phoenix_RDC_Dureza_[Video_Oficial].mp3');
-    song2 = loadSound('Musicas/ProfJam_Água_de_Coco_(Prod_Lhast)[1].mp3');
+    song1 = loadSound('Musicas/Deu_Onda.mp3');
+    song2 = loadSound('Musicas/Love_Tonight.mp3');
     songNumber = 0;
+
+    img = loadImage('Pictures/backgroundMiddle.png');
 
     queue[0] = song1;
     queue[1] = song2;
@@ -38,14 +55,36 @@ function setup() {
     angleMode(DEGREES);
     rotate1 = 0;
     rotate2 = 0;
+    imageMode(CENTER);
+    img.filter(BLUR, 12);
+    fft = new p5.FFT();
 
     //Music
     b = createButton("PLAY")
     b.position(windowWidth/2, windowHeight/2+50)
     b.mousePressed(musicEvent)
 
-    //Animation
-    amp = new p5.Amplitude();
+    
+
+    //Change Music
+    changeBtn1 = createButton("1>>");
+    changeBtn1.position(windowWidth/2 ,0.05*windowHeight);
+    changeBtn1.mousePressed(button1Pressed);
+    changeBtn1.mouseReleased(button1Released);
+
+    changeBtn2 = createButton("2>>");
+    changeBtn2.position(0.05,220);
+    changeBtn2.mousePressed(button2Pressed);
+    changeBtn2.mouseReleased(button2Released);
+
+    changeBtn3 = createButton("3>>");
+    changeBtn3.position(windowWidth/2, 0.95*windowHeight);
+    changeBtn3.mousePressed(button3Pressed);
+    changeBtn3.mouseReleased(button3Released);
+
+    light1 = new Light(20);
+    light2 = new Light(20);
+    light3 = new Light(20);
 
     //Transition
     sliderTransition = createSlider(0, 1, 0.5, 0.01);
@@ -76,21 +115,33 @@ function setup() {
   }
   
 function draw() { 
-    background(255,255,255);
     stroke(200);
-   
-    fill(255,255,255);
-    rect(0, 0, windowWidth/3, windowHeight);
+    background(100);
     
     
-    fill(255,255,255);
-    rect(windowWidth/3, 0, windowWidth/3, windowHeight);
+    //Middle Animation
+    push();
+    middleSection();
+    pop();
     
     //UPDATE SOUND
     updateSound(sliderTransition.value(), sliderVolume1.value(),sliderVolume2.value(), sliderRate1.value(), sliderRate2.value());
 
-    //Middle Animation
-    middleAnimation();
+    //Lights
+    push();
+    translate(width/2, height/10);
+    light1.draw();
+    pop();
+    push();
+    translate(width/2, 8*height/10);
+    light1.draw();
+    pop();
+    push();
+    translate(width/10, height/2);
+    rotate(90);
+    light1.draw();
+    pop();
+
     //ROTATE DISKS
     rotate1_speed = sliderRate1.value()*3;
     rotate1 += rotate1_speed;
@@ -120,8 +171,39 @@ function searchEvent(){
 }
 
 function musicEvent(){
-    queue[0].play();
-    queue[1].play();
+    if(queue[0].isPlaying()){
+        queue[0].pause();
+        queue[1].pause();
+    }
+    else{
+        queue[0].play();
+        queue[1].play();
+    }
+    
+}
+
+function button1Pressed(){
+    button1_pressed = true;
+}
+
+function button1Released(){
+    button1_pressed = false;
+}
+
+function button2Pressed(){
+    button2_pressed = true;
+}
+
+function button2Released(){
+    button2_pressed = false;
+}
+
+function button3Pressed(){
+    button3_pressed = true;
+}
+
+function button3Released(){
+    button3_pressed = false;
 }
 
 function updateSound(transaction, volume1, volume2, rate1, rate2){
@@ -141,26 +223,103 @@ function updateSound(transaction, volume1, volume2, rate1, rate2){
     
 }
 
-function middleAnimation() {
-    
-    var vol = amp.getLevel();
-    volhistory.push(vol);
+
+function middleSection(){
 
     stroke(255);
-    fill(150,0,0);
+    noFill();
+    translate(windowWidth/2, height/2)
+
     push();
-    translate(width / 2, height / 2);
-    beginShape();
-    for (var i = 0; i < 360; i++) {
-      var r = map(volhistory[i], 0, 1, 50, 500);
-      var x = r * cos(i);
-      var y = r * sin(i);
-      vertex(x, y);
+    if(amp > 230) {
+      rotate(random(-0.9, 0.9));
     }
-    endShape();
+    image(img, 0, 0, windowWidth/3, height);
     pop();
 
-    if (volhistory.length > 360) {
-      volhistory.splice(0, 1);
+    fft.analyze();
+    amp = fft.getEnergy(20,200);
+
+    var wave = fft.waveform();
+    for(var t= -1; t <= 1; t+= 2){
+      beginShape();
+      for(var i = 0; i < 180; i+= 0.5){
+        var index = floor(map(i, 0, 180, 0, (wave.length -1)));
+        var r = map(wave[index], -1 , 1, 100, 200);
+        var x = r * sin(i) * t;
+        var y = r * cos(i);
+        vertex(x,y);
+      }
+      endShape();
     }
-  }
+    var p = new Particle();
+    particles.push(p);
+
+    for(var i =0;i < particles.length; i++){
+      particles[i].update(amp)
+      particles[i].show();
+    }
+}
+
+class Particle {
+    constructor(){
+      this.pos = p5.Vector.random2D().mult(150)
+      this.vel = createVector(0,0);
+      this.acc = this.pos.copy().mult(random(0.0001, 0.00001));
+      this.color = color(random(255),random(255), random(255));
+  
+      this.w = random(3, 5);
+    }
+    update(){
+      this.vel.add(this.acc);
+      this.pos.add(this.vel);
+      if(amp > 230){
+        this.pos.add(this.vel);
+        this.pos.add(this.vel);
+        this.pos.add(this.vel);
+      }
+    }
+    show(){
+      noStroke();
+      fill(this.color)
+      ellipse(this.pos.x, this.pos.y, 4);
+    }
+}
+
+class Light {
+    constructor(r) {
+        this.x = 0;
+        this.y = 0;
+        this.r = r;
+    }
+
+    draw(){
+        //if button pressed
+        if(!button1_pressed){
+            fill(0);
+            circle(this.x -40,this.y,this.r);
+        }
+        else{
+            fill(0,255,255);
+            circle(this.x -40,this.y,this.r);
+        }
+
+        if(!button2_pressed){
+            fill(0);
+            circle(this.x,this.y,this.r);
+        }
+        else{
+            fill(0,255,255);
+            circle(this.x,this.y,this.r);
+        }
+
+        if(!button3_pressed){
+            fill(0);
+            circle(this.x + 40,this.y,this.r);
+        }
+        else{
+            fill(0,255,255);
+            circle(this.x + 40,this.y,this.r);
+        }
+    }
+}
