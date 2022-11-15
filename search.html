@@ -2,11 +2,29 @@
   <head>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
-    <script src="search.js"></script>
+
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body>
     <main>
+      <div class ="Sobras">
+          <div class="form-container">
+            <textarea id="search" type="text" class="use-keyboard-input" placeholder="search..."></textarea>
+            <button id="clear" class="clear-results">clear</button>
+          </div>
+          <div class="results-container">
+             <ul class="results-list" id="list" style="list-style: none;">
+             </ul>
+          </div>
+          <div class="queue-container">
+              <h2>Queue</h2>
+             <ul class="queue-list" id="queueList" style="list-style: none;"></ul>
+          </div>
+          <div>
+            <script src="search.js"></script>
+          </div>
+      </div>
     </main>
   </body>
 </html>
