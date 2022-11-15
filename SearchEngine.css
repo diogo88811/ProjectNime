@@ -8,14 +8,20 @@
     border: 1px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
 }
-ul {
+.form-container{
+  width:400px;
+  margin:0px;
+}
+.results-container{
+  width:360px
+}
+.results-container ul {
     padding: 0;
     margin: 0;
     list-style: none;
     background-color: white;
 }
-
-li {
+.results-container li {
     position: relative;
     padding-left: 30px;
     height: 50px;
@@ -38,7 +44,7 @@ li {
     user-select: none;
 }
 
-li:before {
+.results-container li:before {
     position: absolute;
     content: "";
     left: 4px;
@@ -49,7 +55,63 @@ li:before {
     border-bottom: 10px solid transparent;
 }
 
-li:after {
+.results-container li:after {
+    position: absolute;
+    content: "";
+    left: 4px;
+    top: 50%;
+    margin-top: -10px;
+    border-left: 5px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.queue-container{
+  position: absolute;
+  right:100px;
+  top:20px;
+  width: 360px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background-color: white;
+}
+
+.queue-item {
+    position: relative;
+    padding-left: 30px;
+    height: 50px;
+    line-height: 50px;
+    margin: 5px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    width: 360px;
+    background: #cccccc; /* Old browsers */
+    background: -moz-linear-gradient(top, #cccccc 0%, #ffffff 25%, #ffffff 75%, #cccccc 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(25%,#ffffff), color-stop(75%,#ffffff), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+    cursor: pointer;
+
+    box-shadow: 2px 2px 3px #666;
+    user-select: none;
+}
+
+.queue-container li:before {
+    position: absolute;
+    content: "";
+    left: 4px;
+    top: 50%;
+    margin-top: -10px;
+    border-left: 20px solid #ccc;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.queue-container li:after {
     position: absolute;
     content: "";
     left: 4px;
@@ -74,11 +136,85 @@ li:hover {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#dddddd',GradientType=0 ); /* IE6-9 */
 }
 
-li:hover:before {
+ li:hover:before {
     border-left-color: #777;
 }
 
-li:active {
+ li:active {
     background: #eee;
     box-shadow: inset 0 1px 1px #666;
+}
+
+/*KEYBOARD*/
+.keyboard {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 5px 0;
+    background: #004134;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    user-select: none;
+    transition: bottom 0.4s;
+}
+
+.keyboard--hidden {
+    bottom: -100%;
+}
+
+.keyboard__keys {
+    text-align: center;
+}
+
+.keyboard__key {
+    height: 45px;
+    width: 6%;
+    max-width: 90px;
+    margin: 3px;
+    border-radius: 4px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    font-size: 1.05rem;
+    outline: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+}
+
+.keyboard__key:active {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.keyboard__key--wide {
+    width: 12%;
+}
+
+.keyboard__key--extra-wide {
+    width: 36%;
+    max-width: 500px;
+}
+
+.keyboard__key--activatable::after {
+    content: '';
+    top: 10px;
+    right: 10px;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+}
+
+.keyboard__key--active::after {
+    background: #08ff00;
+}
+
+.keyboard__key--dark {
+    background: rgba(0, 0, 0, 0.25);
 }
