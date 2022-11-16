@@ -1,6 +1,7 @@
 html, body {
     margin: 0;
     padding: 0;
+    overflow: inherit;
   }
   canvas {
     display: block;
@@ -50,38 +51,166 @@ html, body {
   border-radius: 8px;
 
 }
+
+.main{
+  top: 0%;
+  display: inline;
+}
+.defaultCanvas0{
+  top: 0%;
+}
+.Sobras{
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    height: 20%;
+    width: 50%;
+    top:40%;
+    left: 47%;
+    transform: rotate(-90deg);
+}
+
+.form-container{
+  position:  absolute;
+  left: 0%;
+  top: 0%;
+  width:30%;
+  height: 50%;
+  padding: 0;
+  margin: 0;
+  border-width: 0;
+  border: none;
+}
+
 #search{
     background-image: url('/Pictures/searchicon.png'); /* Add a search icon to input */
     background-position: 10px 12px; /* Position the search icon */
     background-repeat: no-repeat; /* Do not repeat the icon image */
-    width: 400px; /* Full-width */
+    width: 100%; /* Full-width */
+    height:100%;
     font-size: 16px; /* Increase font-size */
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
-    margin-bottom: 12px; /* Add some space below the input */
+    margin-bottom: 0; /* Add some space below the input */
 }
-.form-container{
-  width:400px;
-  margin:0px;
+#clear{
+  position: absolute;
+  top:0%;
+  left:100%;
+  padding: 0;
+  margin: 0;
+  border:none;
+}
+
+
+.queue-container{
+  position: absolute;
+  left: 60%;
+  top: 20%;
+  height: 50%;
+  width: 40%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background-color: none;
+}
+#titulo{
+  position:  absolute;
+  left: 40%;
+  top: -60%;
+  width: 30%;
+  height: 50%;
+  color: white;
+
+}
+
+.queue-container ul {
+    padding: 0;
+    margin: 0;
+    left: 10%;
+    top: 30%;
+    width:88%;
+    height: 100%;
+    list-style: none;
+    background-color: none;
+}
+.queue-container li {
+  position: relative;
+  padding-left: 30px;
+  height: 50%;
+  width: 100%;
+  line-height: 50px;
+  margin: 5px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  background: #cccccc; /* Old browsers */
+  background: -moz-linear-gradient(top, #cccccc 0%, #ffffff 25%, #ffffff 75%, #cccccc 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(25%,#ffffff), color-stop(75%,#ffffff), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+  cursor: pointer;
+  box-shadow: 2px 2px 3px #666;
+  user-select: none;
+}
+
+.queue-container li:before {
+    position: absolute;
+    content: "";
+    left: 4px;
+    top: 50%;
+    margin-top: -10px;
+    border-left: 20px solid #ccc;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.queue-container li:after {
+
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    margin-top: -10px;
+    border-left: 5px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.script{
+  display:none;
 }
 .results-container{
-  width:360px
+  position: absolute;
+  left: 0%;
+  top:50%;
+  padding: 0;
+  margin: 0;
+  width:40%;
+  height: 50%;
+  list-style: none;
 }
+
 .results-container ul {
     padding: 0;
     margin: 0;
+    width:100%;
+    height: 100%;
     list-style: none;
-    background-color: white;
+    background-color: none;
 }
+
 .results-container li {
     position: relative;
     padding-left: 30px;
-    height: 50px;
+    height: 50%;
+    width: 100%;
     line-height: 50px;
     margin: 5px;
     border: 1px solid #aaa;
     border-radius: 8px;
-    width: 360px;
     background: #cccccc; /* Old browsers */
     background: -moz-linear-gradient(top, #cccccc 0%, #ffffff 25%, #ffffff 75%, #cccccc 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(25%,#ffffff), color-stop(75%,#ffffff), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
@@ -91,7 +220,6 @@ html, body {
     background: linear-gradient(to bottom, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
     cursor: pointer;
-
     box-shadow: 2px 2px 3px #666;
     user-select: none;
 }
@@ -118,61 +246,9 @@ html, body {
     border-bottom: 10px solid transparent;
 }
 
-.queue-container{
-  position: absolute;
-  right:100px;
-  top:20px;
-  width: 360px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    background-color: white;
-}
 
-.queue-item {
-    position: relative;
-    padding-left: 30px;
-    height: 50px;
-    line-height: 50px;
-    margin: 5px;
-    border: 1px solid #aaa;
-    border-radius: 8px;
-    width: 360px;
-    background: #cccccc; /* Old browsers */
-    background: -moz-linear-gradient(top, #cccccc 0%, #ffffff 25%, #ffffff 75%, #cccccc 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(25%,#ffffff), color-stop(75%,#ffffff), color-stop(100%,#cccccc)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #cccccc 0%,#ffffff 25%,#ffffff 75%,#cccccc 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
-    cursor: pointer;
 
-    box-shadow: 2px 2px 3px #666;
-    user-select: none;
-}
 
-.queue-container li:before {
-    position: absolute;
-    content: "";
-    left: 4px;
-    top: 50%;
-    margin-top: -10px;
-    border-left: 20px solid #ccc;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-}
-
-.queue-container li:after {
-    position: absolute;
-    content: "";
-    left: 4px;
-    top: 50%;
-    margin-top: -10px;
-    border-left: 5px solid white;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-}
 
 li:hover {
     border-color: #777;
@@ -197,21 +273,25 @@ li:hover {
     box-shadow: inset 0 1px 1px #666;
 }
 
+
+
+
 /*KEYBOARD*/
 .keyboard {
     position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+    right: -22%;
+    bottom: 35%;
+    width: 60%;
     padding: 5px 0;
     background: #004134;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
     user-select: none;
     transition: bottom 0.4s;
+    transform: rotate(-90deg);
 }
 
 .keyboard--hidden {
-    bottom: -100%;
+    right: -100%;
 }
 
 .keyboard__keys {
@@ -269,12 +349,4 @@ li:hover {
 
 .keyboard__key--dark {
     background: rgba(0, 0, 0, 0.25);
-}
-.Sobras{
-    position: absolute;
-    left: 650px;
-    top: 200px;
-    width: 50%;
-    height: 10%;
-    transform: rotate(-90deg);
 }
