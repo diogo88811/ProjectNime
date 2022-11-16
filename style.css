@@ -273,8 +273,8 @@ li:hover {
 .Sobras{
     position: absolute;
     left: 650px;
-    top: 500px;
-    width: 70%;
-    height: 300px;
+    top: 200px;
+    width: 50%;
+    height: 10%;
     transform: rotate(-90deg);
 }
