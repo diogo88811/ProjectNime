@@ -271,7 +271,7 @@ li:hover {
     background: rgba(0, 0, 0, 0.25);
 }
 .Sobras{
-    position: relative;
+    position: absolute;
     left: 650px;
     top: 500px;
     width: 70%;
