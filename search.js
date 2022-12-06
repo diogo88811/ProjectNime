@@ -661,4 +661,10 @@ window.addEventListener("DOMContentLoaded", function() {
 });
 
 
+// this prevent dragging the screen around 
+function touchMoved() {
+  return false;
+}
+
+
 //test commit
