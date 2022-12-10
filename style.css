@@ -22,7 +22,11 @@ html, body {
   /* Stops the default outline showing up */
   outline: none;
 }
-
+/*
+* {
+  outline: 1px solid red;
+}
+*/
 /* This is the "track" that the slider sits on  */
 .mySliders::-webkit-slider-runnable-track {
   background: #000000;
@@ -87,7 +91,7 @@ html, body {
     background-position: 10px 12px; /* Position the search icon */
     background-repeat: no-repeat; /* Do not repeat the icon image */
     width: 100%; /* Full-width */
-    height:100%;
+    height:50%;
     font-size: 16px; /* Increase font-size */
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
@@ -279,14 +283,14 @@ li:hover {
 /*KEYBOARD*/
 .keyboard {
     position: fixed;
-    right: -22%;
-    bottom: 35%;
-    width: 60%;
+    right: -19.5%;
+    bottom: 37%;
+    width: 52%;
     padding: 5px 0;
     background: #004134;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
     user-select: none;
-    transition: bottom 0.4s;
+    transition: bottom 0.8s;
     transform: rotate(-90deg);
 }
 

@@ -33,9 +33,8 @@ var particles = [];
 var fft;
 
 //Cenas Sobras
-const songsDatabaseSobras = []
-const queueSobras = [];
-let songNumberSobras;
+const songsDatabase = []
+const queue = [];
 const searchInput = document.getElementById("search");
 const clearButton = document.getElementById("clear");
 const lista = document.getElementById("list");
@@ -52,10 +51,10 @@ function preload() {
   img = loadImage('Pictures/backgroundMiddle.png');
 
   //Cenas Sobras
-  songsDatabaseSobras[0] = loadSound('Musicas/Phoenix RDC-Dureza.mp3');
-  songsDatabaseSobras[1] = loadSound('Musicas/ProfJam-Agua de Coco(Prod_Lhast).mp3');
-  songsDatabaseSobras[2] = loadSound('Musicas/Deu_Onda.mp3');
-  songsDatabaseSobras[3] = loadSound('Musicas/Love_Tonight.mp3');
+  songsDatabase[0] = loadSound('Musicas/Phoenix RDC-Dureza.mp3');
+  songsDatabase[1] = loadSound('Musicas/ProfJam-Agua de Coco(Prod_Lhast).mp3');
+  songsDatabase[2] = loadSound('Musicas/Deu_Onda.mp3');
+  songsDatabase[3] = loadSound('Musicas/Love_Tonight.mp3');
 
 }
 
@@ -127,7 +126,7 @@ function setup() {
   //jumpButton = createButton('Skip the Song');
   //jumpButton.mousePressed(jumpSong);
 
-  //playSongsInQueue = createButton('Play Songs in queueSobras')
+  //playSongsInQueue = createButton('Play Songs in queue')
   //playSongsInQueue.mousePressed(playSongs)
 
 }
@@ -190,16 +189,16 @@ function searchEvent() {
 }
 
 function musicEvent() {
-  if (queueSobras.length < 2)
+  if (queue.length < 2)
     console.log("Two songs needed")
   else {
     if (diskSongs.length != 0) {
       diskSongs[0].pause();
       diskSongs[1].pause();
-      queueSobras.splice(0, 1);
-      queueSobras.splice(0, 1);
-      diskSongs[0] = queueSobras[0];
-      diskSongs[1] = queueSobras[1];
+      queue.splice(0, 1);
+      queue.splice(0, 1);
+      diskSongs[0] = queue[0];
+      diskSongs[1] = queue[1];
       diskSongs[0].play();
       diskSongs[1].play();
 
@@ -207,8 +206,8 @@ function musicEvent() {
       visualQueue.removeChild(visualQueue.firstChild);
       visualQueue.removeChild(visualQueue.firstChild);
     } else {
-      diskSongs[0] = queueSobras[0];
-      diskSongs[1] = queueSobras[1];
+      diskSongs[0] = queue[0];
+      diskSongs[1] = queue[1];
       diskSongs[0].play();
       diskSongs[1].play();
       visualQueue.removeChild(visualQueue.firstChild);
@@ -367,8 +366,8 @@ function searchForInput(currentValue) {
   if (value && value.trim().length > 0) {
     //Redefine 'value' to exclude white space in the beggining and end of the text
     value = value.trim().toLowerCase();
-    //Does a verification if the queueSobras contains a song with name equal to the searxhed text
-    setList(songsDatabaseSobras.filter(song => {
+    //Does a verification if the queue contains a song with name equal to the searxhed text
+    setList(songsDatabase.filter(song => {
       let splittedString = song.url.split('\/')[1].toLowerCase();
       return splittedString.includes(value)
     }))
@@ -425,15 +424,15 @@ function clearList() {
 }
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////QUEUE//////////////////////////////////////
-//Add selected song to the queueSobras
+//Add selected song to the queue
 lista.addEventListener("click", function(e) {
   let songName = e.target.textContent;
-  for (const song of songsDatabaseSobras) {
+  for (const song of songsDatabase) {
     if (song.url.split('\/')[1] === songName) {
-      //Adds song to the queueSobras
-      queueSobras[queueSobras.length] = loadSound(song.url);
+      //Adds song to the queue
+      queue[queue.length] = loadSound(song.url);
 
-      //Adds song to the  the visual queueSobras
+      //Adds song to the  the visual queue
       const songInQueue = document.createElement('li');
       songInQueue.classList.add('queue-item');
       let text = document.createTextNode(songName);
@@ -442,38 +441,38 @@ lista.addEventListener("click", function(e) {
 
     }
   }
-  if (queueSobras.length == 0) {
+  if (queue.length == 0) {
     console.log("Music does not exist")
   }
 });
-//Jumps song to the next in queueSobras
+//Jumps song to the next in queue
 function jumpSong() {
-  if (queueSobras.length > 1) {
-    queueSobras[0].stop();
-    queueSobras.splice(0, 1);
+  if (queue.length > 1) {
+    queue[0].stop();
+    queue.splice(0, 1);
     visualQueue.removeChild(visualQueue.firstChild);
-    if (queueSobras.length == 0)
+    if (queue.length == 0)
       console.log("Queue reached the end")
     else {
-      queueSobras[0].play();
+      queue[0].play();
     }
-  } else if (queueSobras.length == 1) {
-    queueSobras[0].stop();
-    queueSobras.splice(0, 1);
+  } else if (queue.length == 1) {
+    queue[0].stop();
+    queue.splice(0, 1);
     console.log("Queue reached the end")
   } else {
     console.log("Queue is empty")
   }
 }
 /*
-//Plays current songs in queueSobras
+//Plays current songs in queue
 function playSongs() {
-  if (queueSobras.length == 0)
+  if (queue.length == 0)
     console.log("Queue is empty")
-  else if (queueSobras[0].isPlaying()) {
+  else if (queue[0].isPlaying()) {
     console.log("Music is already playing")
   } else {
-    queueSobras[0].play();
+    queue[0].play();
     visualQueue.removeChild(visualQueue.firstChild);
   }
 }*/
