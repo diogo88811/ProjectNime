@@ -63,7 +63,11 @@ function preload() {
   songsDatabase[1] = loadSound('Musicas/ProfJam-Agua de Coco(Prod_Lhast).mp3');
   songsDatabase[2] = loadSound('Musicas/Deu_Onda.mp3');
   songsDatabase[3] = loadSound('Musicas/Love_Tonight.mp3');
-  songsDatabase[3] = loadSound('Musicas/Test.mp3');
+  songsDatabase[4] = loadSound('Musicas/Test.mp3');
+  songsDatabase[5] = loadSound('Musicas/Test copy.mp3');
+  songsDatabase[6] = loadSound('Musicas/Test copy 2.mp3');
+  songsDatabase[7] = loadSound('Musicas/Test copy 3.mp3');
+  songsDatabase[8] = loadSound('Musicas/Test copy 4.mp3');
 
   //load sound effects in local database
   soundEffectsDatabase[0] = loadSound('SoundEffects/Beat.mp3');
@@ -320,12 +324,20 @@ function playNext(song) {
   songNameDisk1 = ""
   songNameDisk2 = ""
   songNameNextQueue = ""
+
+  if(diskSongs[0].url.split('\/')[1] == songName){
+    diskSongs.splice(0,1);
+  }
+  else if(diskSongs[1].url.split('\/')[1] == songName){
+    diskSongs.splice(1,1);
+  }
 }    
   else {
     if (diskSongs[0].url.split('\/')[1] == songName) {
       diskSongs[0] = queue[0];
       queue.splice(0, 1);
       diskSongs[0].play();
+      diskSongs[0].onended(playNext);
       songNameDisk1 = diskSongs[0].url.split('\/')[1]
       visualQueue.removeChild(visualQueue.firstChild);
     } 
@@ -333,6 +345,7 @@ function playNext(song) {
       diskSongs[1] = queue[0];
       queue.splice(0, 1);
       diskSongs[1].play();
+      diskSongs[1].onended(playNext);
       songNameDisk2 = diskSongs[1].url.split('\/')[1]
       visualQueue.removeChild(visualQueue.firstChild);
     }
@@ -452,7 +465,6 @@ function middleSection() {
       particles.splice(i,1)
     }
   }
-  console.log(particles.length)
 }
 
 class Particle {
