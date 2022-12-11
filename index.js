@@ -167,7 +167,7 @@ function setup() {
   kickButton.position(0.26 * windowWidth, 0.45 * windowHeight)
   kickButton.mousePressed(kickPlay)
   kickButton.style("transform", "rotate(90deg)")
-  kickButton.style("background-image", "url('/Pictures/Kick.png')")
+  kickButton.style("background-image", "url('Pictures/Kick.png')")
   kickButton.style("background-size", "80%")
   kickButton.style("background-position", "center center")
   kickButton.style("background-repeat", "no-repeat")
