@@ -43,7 +43,6 @@ let songNameDisk2 = "";
 let songNameNextQueue = "";
 const queue = [];
 const searchInput = document.getElementById("search");
-const clearButton = document.getElementById("clear");
 const lista = document.getElementById("list");
 const visualQueue = document.getElementById("queueList");
 
@@ -88,11 +87,6 @@ function setup() {
   fft = new p5.FFT();
 
   changeBtnSize = [0.1 * windowWidth, 0.1 * windowHeight];
-
-  //Music
-  b = createButton("PLAY")
-  b.position(windowWidth / 2, windowHeight / 2 + 50)
-  b.mousePressed(musicEvent)
 
   //Change Music
   changeBtn1 = createButton("SKIP1");
@@ -238,7 +232,7 @@ function draw() {
   pop();
 
   //UPDATE SOUND
-  if (diskSongs.length > 0)
+  if (diskSongs.length > 0 && diskSongs[0]!="" && diskSongs[1]!="")
     updateSound(sliderTransition.value(), sliderVolume1.value(), sliderVolume2.value(), sliderRate1.value(), sliderRate2.value());
 
   //Lights
@@ -321,18 +315,19 @@ function beat2Play(){
 function playNext(song) {
   songName = song.url.split('\/')[1];
   if (queue.length == 0) {
-  console.log("Queue is empty")
-  songNameDisk1 = ""
-  songNameDisk2 = ""
-  songNameNextQueue = ""
+    console.log("Queue is empty")
+    songNameNextQueue = ""
+    
+    if(diskSongs[0]!="" && diskSongs[0].url.split('\/')[1] == songName){
+      diskSongs[0]=""
+      songNameDisk1 = ""
+    }
+    else if(diskSongs[1]!="" && diskSongs[1].url.split('\/')[1] == songName){
+      diskSongs[1]=""
+      songNameDisk2 = ""
+    }
+  }
 
-  if(diskSongs[0].url.split('\/')[1] == songName){
-    diskSongs.splice(0,1);
-  }
-  else if(diskSongs[1].url.split('\/')[1] == songName){
-    diskSongs.splice(1,1);
-  }
-}    
   else {
     if (diskSongs[0].url.split('\/')[1] == songName) {
       diskSongs[0] = queue[0];
@@ -348,35 +343,6 @@ function playNext(song) {
       diskSongs[1].play();
       diskSongs[1].onended(playNext);
       songNameDisk2 = diskSongs[1].url.split('\/')[1]
-      visualQueue.removeChild(visualQueue.firstChild);
-    }
-  }
-
-}
-//Musica associated to play button
-function musicEvent() {
-  if (queue.length < 2)
-    console.log("Two songs needed")
-  else {
-    if (diskSongs.length != 0) {
-      diskSongs[0].pause();
-      diskSongs[1].pause();
-      queue.splice(0, 1);
-      queue.splice(0, 1);
-      diskSongs[0] = queue[0];
-      diskSongs[1] = queue[1];
-      diskSongs[0].play();
-      diskSongs[1].play();
-
-
-      visualQueue.removeChild(visualQueue.firstChild);
-      visualQueue.removeChild(visualQueue.firstChild);
-    } else {
-      diskSongs[0] = queue[0];
-      diskSongs[1] = queue[1];
-      diskSongs[0].play();
-      diskSongs[1].play();
-      visualQueue.removeChild(visualQueue.firstChild);
       visualQueue.removeChild(visualQueue.firstChild);
     }
   }
@@ -606,12 +572,6 @@ function noResults() {
   lista.appendChild(error)
 }
 
-//Clear button clears input and results from search
-clearButton.addEventListener("click", function(e) {
-  document.getElementById("search").value = "";
-  clearList();
-});
-
 //Clean results from search
 function clearList() {
   //looping through each child of the search results list and remove each child
@@ -627,14 +587,14 @@ lista.addEventListener ("click", function(e) {
   for (const song of songsDatabase) {
     if (song.url.split('\/')[1] === songName) {
       //Adds song to the disk 0
-      if(diskSongs.length == 0){
+      if(diskSongs.length == 0 || diskSongs[0] == ""){
         diskSongs[0] = song;
         diskSongs[0].play();
         songNameDisk1=songName
         diskSongs[0].onended(playNext);
       }
       //Adds song to disk1
-      else if (diskSongs.length == 1){
+      else if (diskSongs.length == 1 || diskSongs[1] == ""){
         diskSongs[1] = song;
         diskSongs[1].play();
         songNameDisk2=songName
