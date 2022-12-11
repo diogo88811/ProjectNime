@@ -183,7 +183,7 @@ function setup() {
   SirenButton.position(0.26 * windowWidth, 0.51 * windowHeight)
   SirenButton.mousePressed(sirenPlay)
   SirenButton.style("transform", "rotate(90deg)")
-  SirenButton.style("background-image", "url('/Pictures/airHorn.png')")
+  SirenButton.style("background-image", "url('Pictures/airHorn.png')")
   SirenButton.style("background-size", "50%")
   SirenButton.style("background-position", "center center")
   SirenButton.style("background-repeat", "no-repeat")
