@@ -288,6 +288,7 @@ function draw() {
   image(volumeIcon, 0, 0, 15,15);
   pop();
 
+  drawBase();
 
 
 }
@@ -425,6 +426,15 @@ function updateSound(transaction, volume1, volume2, rate1, rate2) {
   }
 }
 
+function drawBase(){
+
+  push();
+  square = color(0,0,0);
+  square.setAlpha(0.25);
+  fill(square);
+  rect(30, 20, 55, 55);
+  pop();
+}
 
 function middleSection() {
 
