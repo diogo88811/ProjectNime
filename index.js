@@ -10,6 +10,9 @@ var sliderVolume1;
 var sliderVolume2;
 var sliderTransition;
 
+//icons
+var volumeIcon;
+
 //Change music buttons
 var changeBtn1;
 var changeBtn2;
@@ -17,11 +20,10 @@ var changeBtn3;
 var button1_pressed = false;
 var button2_pressed = false;
 var button3_pressed = false;
+var changeBtnSize = [];
 
 //Lights
-var light1;
-var light2;
-var light3;
+var light;
 
 //Songs
 let diskSongs = [];
@@ -43,6 +45,7 @@ const visualQueue = document.getElementById("queueList");
 function preload() {
   disk1 = loadImage('Pictures/DJDisk.png');
   disk2 = loadImage('Pictures/DJDisk.png');
+  volumeIcon = loadImage('Pictures/volume_icon.png');
 
   soundFormats('mp3', 'ogg');
 
@@ -68,6 +71,8 @@ function setup() {
   img.filter(BLUR, 12);
   fft = new p5.FFT();
 
+  changeBtnSize = [0.1 * windowWidth, 0.1 * windowHeight];
+
   //Music
   b = createButton("PLAY")
   b.position(windowWidth / 2, windowHeight / 2 + 50)
@@ -76,50 +81,58 @@ function setup() {
 
 
   //Change Music
-  changeBtn1 = createButton("1>>");
-  changeBtn1.position(windowWidth / 2, 0.05 * windowHeight);
+  changeBtn1 = createButton("SKIP1");
+  changeBtn1.position(windowWidth/2 - changeBtnSize[0]/2 ,0.01 * windowHeight);
+  changeBtn1.size(changeBtnSize[0], changeBtnSize[1]);
   changeBtn1.mousePressed(button1Pressed);
   changeBtn1.mouseReleased(button1Released);
+  changeBtn1.addClass("skipButton1");
 
-  changeBtn2 = createButton("2>>");
-  changeBtn2.position(0.05, 220);
+  changeBtn2 = createButton("SKIP2");
+  changeBtn2.position(0.01 * windowHeight, windowHeight/2 - changeBtnSize[1]/2);
+  changeBtn2.size(changeBtnSize[0], changeBtnSize[1]);
   changeBtn2.mousePressed(button2Pressed);
   changeBtn2.mouseReleased(button2Released);
+  changeBtn2.addClass("skipButton2");
 
-  changeBtn3 = createButton("3>>");
-  changeBtn3.position(windowWidth / 2, 0.95 * windowHeight);
+  changeBtn3 = createButton("SKIP3");
+  changeBtn3.position(windowWidth/2 - changeBtnSize[0]/2, windowHeight - changeBtnSize[1] - 0.01 * windowHeight);
+  changeBtn3.size(changeBtnSize[0], changeBtnSize[1]);
   changeBtn3.mousePressed(button3Pressed);
   changeBtn3.mouseReleased(button3Released);
+  changeBtn3.addClass("skipButton3");
 
-  light1 = new Light(20);
-  light2 = new Light(20);
-  light3 = new Light(20);
+  light = new Light(20);
 
   //Transition
   sliderTransition = createSlider(0, 1, 0.5, 0.01);
   sliderTransition.position((0.5 * windowWidth) / 8, 0.5 * windowHeight);
   sliderTransition.style("width", 0.2 * windowHeight);
   sliderTransition.style("transform", "rotate(90deg)")
-  sliderTransition.addClass("mySliders");
+  sliderTransition.addClass("slider");
   sliderTransition.mousePressed(sliderTransition)
 
   //DISK 1 COMPONENTS
   sliderRate1 = createSlider(0, 2, 1, 0.01);
   sliderRate1.position((1.5 * windowWidth) / 8, 0.1 * windowHeight);
-  sliderRate1.addClass("mySliders");
+  sliderRate1.style("width", 0.2 * windowHeight);
+  sliderRate1.addClass("slider");
 
   sliderVolume1 = createSlider(0, 1, 1, 0.01);
   sliderVolume1.position((1.5 * windowWidth) / 8, 0.12 * windowHeight);
-  sliderVolume1.addClass("mySliders");
+  sliderVolume1.style("width", 0.2 * windowHeight);
+  sliderVolume1.addClass("slider");
 
   //DISK 2 COMPONENTS
   sliderRate2 = createSlider(0, 2, 1, 0.01);
   sliderRate2.position((1.5 * windowWidth) / 8, (1 - 0.1) * windowHeight);
-  sliderRate2.addClass("mySliders");
+  sliderRate2.style("width", 0.2 * windowHeight);
+  sliderRate2.addClass("slider");
 
   sliderVolume2 = createSlider(0, 1, 1, 0.01);
   sliderVolume2.position((1.5 * windowWidth) / 8, (1 - 0.12) * windowHeight);
-  sliderVolume2.addClass("mySliders");
+  sliderVolume2.style("width", 0.2 * windowHeight);
+  sliderVolume2.addClass("slider");
 
   //Cenas Sobras
   //songNumberSobras = 0;
@@ -132,8 +145,8 @@ function setup() {
 }
 
 function draw() {
-  stroke(200);
-  background(100);
+  stroke(0);
+  background(60, 64, 72);
 
 
   //Middle Animation
@@ -147,17 +160,17 @@ function draw() {
 
   //Lights
   push();
-  translate(width / 2, height / 10);
-  light1.draw();
+  translate(windowWidth/2, windowHeight*0.01 + changeBtnSize[1]*1.2);
+  light.draw();
   pop();
   push();
-  translate(width / 2, 8 * height / 10);
-  light1.draw();
+  translate(windowWidth / 2, windowHeight - windowHeight*0.01 - changeBtnSize[1]*1.2);
+  light.draw();
   pop();
   push();
-  translate(width / 10, height / 2);
+  translate(windowHeight*0.01 + changeBtnSize[1]*2,windowHeight/2);
   rotate(90);
-  light1.draw();
+  light.draw();
   pop();
 
   //ROTATE DISKS
@@ -175,8 +188,24 @@ function draw() {
   translate((2 * windowWidth) / 8, (1 - 0.3) * windowHeight)
   rotate(rotate2);
   image(disk1, 0, 0, 0.28 * windowHeight, 0.28 * windowHeight);
-
   pop()
+
+  //ICONS
+  //Volume1
+  push();
+  translate((1.4 * windowWidth) / 8, 0.12 * windowHeight);
+  rotate(90);
+  image(volumeIcon, 0, 0, 15,15);
+  pop();
+
+  //Volume2
+  push();
+  translate((1.4 * windowWidth) / 8, (1 - 0.12) * windowHeight);
+  rotate(90);
+  image(volumeIcon, 0, 0, 15,15);
+  pop();
+
+
 
 }
 
@@ -269,7 +298,7 @@ function middleSection() {
   if (amp > 230) {
     rotate(random(-0.9, 0.9));
   }
-  image(img, 0, 0, windowWidth / 3, height);
+  //image(img, 0, 0, windowWidth / 3, height);
   pop();
 
   fft.analyze();
@@ -293,7 +322,12 @@ function middleSection() {
   for (var i = 0; i < particles.length; i++) {
     particles[i].update(amp)
     particles[i].show();
+
+    if(particles[i].pos.x > windowWidth /2 || particles[i].pos.x <  (-windowWidth /2) || particles[i].pos.y > windowHeight /2 || particles[i].pos.y <  (-windowHeight) /2){
+      particles.splice(i,1)
+    }
   }
+  console.log(particles.length)
 }
 
 class Particle {
@@ -330,29 +364,45 @@ class Light {
 
   draw() {
     //if button pressed
+    push();
     if (!button1_pressed) {
       fill(0);
       circle(this.x - 40, this.y, this.r);
     } else {
-      fill(0, 255, 255);
+      drawingContext.shadowBlur = 30;
+      drawingContext.shadowColor = 'red';
+      fill(255, 0, 0);
+      stroke(255,0,0);
       circle(this.x - 40, this.y, this.r);
     }
+    pop();
 
+    push();
     if (!button2_pressed) {
       fill(0);
       circle(this.x, this.y, this.r);
     } else {
       fill(0, 255, 255);
+      drawingContext.shadowBlur = 30;
+      drawingContext.shadowColor = 'red';
+      fill(255, 0, 0);
+      stroke(255,0,0);
       circle(this.x, this.y, this.r);
     }
+    pop();
 
+    push();
     if (!button3_pressed) {
       fill(0);
       circle(this.x + 40, this.y, this.r);
     } else {
-      fill(0, 255, 255);
+      drawingContext.shadowBlur = 30;
+      drawingContext.shadowColor = 'red';
+      fill(255, 0, 0);
+      stroke(255,0,0);
       circle(this.x + 40, this.y, this.r);
     }
+    pop();
   }
 }
 ////////////////////////////////////////////////////////////////////////////////
