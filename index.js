@@ -34,6 +34,11 @@ var fft;
 
 //Cenas Sobras
 const songsDatabase = []
+const soundEffectsDatabase = []
+//Names of the songs
+let songNameDisk1 = "";
+let songNameDisk2 = "";
+let songNameNextQueue = "";
 const queue = [];
 const searchInput = document.getElementById("search");
 const clearButton = document.getElementById("clear");
@@ -50,11 +55,18 @@ function preload() {
 
   img = loadImage('Pictures/backgroundMiddle.png');
 
-  //Cenas Sobras
+  //Load songs in local data base
   songsDatabase[0] = loadSound('Musicas/Phoenix RDC-Dureza.mp3');
   songsDatabase[1] = loadSound('Musicas/ProfJam-Agua de Coco(Prod_Lhast).mp3');
   songsDatabase[2] = loadSound('Musicas/Deu_Onda.mp3');
   songsDatabase[3] = loadSound('Musicas/Love_Tonight.mp3');
+  songsDatabase[3] = loadSound('Musicas/Test.mp3');
+
+  //load sound effects in local database
+  soundEffectsDatabase[0] = loadSound('SoundEffects/Beat.mp3');
+  soundEffectsDatabase[1] = loadSound('SoundEffects/Beat2.mp3');
+  soundEffectsDatabase[2] = loadSound('SoundEffects/Kick.mp3');
+  soundEffectsDatabase[3] = loadSound('SoundEffects/Siren.mp3');
 
 }
 
@@ -72,8 +84,6 @@ function setup() {
   b = createButton("PLAY")
   b.position(windowWidth / 2, windowHeight / 2 + 50)
   b.mousePressed(musicEvent)
-
-
 
   //Change Music
   changeBtn1 = createButton("1>>");
@@ -121,6 +131,48 @@ function setup() {
   sliderVolume2.position((1.5 * windowWidth) / 8, (1 - 0.12) * windowHeight);
   sliderVolume2.addClass("mySliders");
 
+  //SOUND EFFECTS
+  beat1Button= createButton("")
+  beat1Button.position(0.28 * windowWidth, 0.45 * windowHeight)
+  beat1Button.mousePressed(beat1Play)
+  beat1Button.style("transform", "rotate(90deg)")
+  beat1Button.style("background-image", "url('/Pictures/Beat.png')")
+  beat1Button.style("background-size", "60%")
+  beat1Button.style("background-position", "center center")
+  beat1Button.style("background-repeat", "no-repeat")
+  beat1Button.size(windowHeight*0.05, windowHeight*0.05)
+  
+  beat2Button= createButton("")
+  beat2Button.position(0.28 * windowWidth, 0.51 * windowHeight)
+  beat2Button.mousePressed(beat2Play)
+  beat2Button.style("transform", "rotate(90deg)")
+  beat2Button.style("background-image", "url('/Pictures/Beat.png')")
+  beat2Button.style("background-size", "60%")
+  beat2Button.style("background-position", "center center")
+  beat2Button.style("background-repeat", "no-repeat")
+  beat2Button.size(windowHeight*0.05, windowHeight*0.05)
+
+  kickButton= createButton("")
+  kickButton.position(0.26 * windowWidth, 0.45 * windowHeight)
+  kickButton.mousePressed(kickPlay)
+  kickButton.style("transform", "rotate(90deg)")
+  kickButton.style("background-image", "url('/Pictures/Kick.png')")
+  kickButton.style("background-size", "80%")
+  kickButton.style("background-position", "center center")
+  kickButton.style("background-repeat", "no-repeat")
+  kickButton.size(windowHeight*0.05, windowHeight*0.05)
+
+  SirenButton= createButton("")
+  SirenButton.position(0.26 * windowWidth, 0.51 * windowHeight)
+  SirenButton.mousePressed(sirenPlay)
+  SirenButton.style("transform", "rotate(90deg)")
+  SirenButton.style("background-image", "url('/Pictures/airHorn.png')")
+  SirenButton.style("background-size", "50%")
+  SirenButton.style("background-position", "center center")
+  SirenButton.style("background-repeat", "no-repeat")
+  SirenButton.size(windowHeight*0.05, windowHeight*0.05)
+
+
   //Cenas Sobras
   //songNumberSobras = 0;
   //jumpButton = createButton('Skip the Song');
@@ -135,6 +187,33 @@ function draw() {
   stroke(200);
   background(100);
 
+  //Next song in queue
+  if(queue.length>0){
+    songNameNextQueue = queue[0].url.split('\/')[1];
+    push();
+    translate(0.32* windowWidth, 0.43 * windowHeight);
+    rotate(90);
+    fill(255,255,255)
+    text(songNameNextQueue,0,0);
+    pop();
+  }
+  
+
+  //Song name under disk1
+  push();
+  translate(windowWidth *0.15, windowHeight*0.20);
+  rotate(90);
+  fill(255,255,255)
+  text(songNameDisk1,0,0);
+  pop();
+  
+  //Song name under disk 2
+  push();
+  translate(windowWidth *0.15, windowHeight*0.65);
+  rotate(90);
+  fill(255,255,255)
+  text(songNameDisk2,0,0);
+  pop()
 
   //Middle Animation
   push();
@@ -150,7 +229,7 @@ function draw() {
   translate(width / 2, height / 10);
   light1.draw();
   pop();
-  push();
+  push();rotate2
   translate(width / 2, 8 * height / 10);
   light1.draw();
   pop();
@@ -188,6 +267,50 @@ function searchEvent() {
   console.log('you are clicking on search button');
 }
 
+function sirenPlay(){
+  soundEffectsDatabase[3].play();
+}
+
+function kickPlay(){
+  soundEffectsDatabase[2].play();
+}
+
+function beat1Play(){
+  soundEffectsDatabase[0].play();
+}
+
+function beat2Play(){
+  soundEffectsDatabase[1].play();
+}
+
+//Automatic skip for when the song ends
+function playNext(song) {
+  songName = song.url.split('\/')[1];
+  if (queue.length == 0) {
+  console.log("Queue is empty")
+  songNameDisk1 = ""
+  songNameDisk2 = ""
+  songNameNextQueue = ""
+}    
+  else {
+    if (diskSongs[0].url.split('\/')[1] == songName) {
+      diskSongs[0] = queue[0];
+      queue.splice(0, 1);
+      diskSongs[0].play();
+      songNameDisk1 = diskSongs[0].url.split('\/')[1]
+      visualQueue.removeChild(visualQueue.firstChild);
+    } 
+    else if (diskSongs[1].url.split('\/')[1] == songName){
+      diskSongs[1] = queue[0];
+      queue.splice(0, 1);
+      diskSongs[1].play();
+      songNameDisk2 = diskSongs[1].url.split('\/')[1]
+      visualQueue.removeChild(visualQueue.firstChild);
+    }
+  }
+
+}
+//Musica associated to play button
 function musicEvent() {
   if (queue.length < 2)
     console.log("Two songs needed")
@@ -247,15 +370,17 @@ function updateSound(transaction, volume1, volume2, rate1, rate2) {
 
   volume_song1 = (1 - transaction) * volume1;
   vomule_song2 = (transaction) * volume2;
-
-  //Volume
-  diskSongs[0].setVolume(volume_song1);
-  diskSongs[1].setVolume(vomule_song2);
-
-  //Rate
-  diskSongs[0].rate(rate1);
-  diskSongs[1].rate(rate2);
-
+  //Volume and Rate
+  if(diskSongs.length == 1){
+    diskSongs[0].setVolume(volume_song1);
+    diskSongs[0].rate(rate1);
+  }
+  else if (diskSongs.length == 2){
+    diskSongs[0].setVolume(volume_song1);
+    diskSongs[0].rate(rate1);
+    diskSongs[1].setVolume(vomule_song2);
+    diskSongs[1].rate(rate2);
+  }
 }
 
 
@@ -424,8 +549,44 @@ function clearList() {
 }
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////QUEUE//////////////////////////////////////
-//Add selected song to the queue
-lista.addEventListener("click", function(e) {
+//Add selected song to the queue or the disks
+lista.addEventListener ("click", function(e) {
+  let songName = e.target.textContent;
+  for (const song of songsDatabase) {
+    if (song.url.split('\/')[1] === songName) {
+      //Adds song to the disk 0
+      if(diskSongs.length == 0){
+        diskSongs[0] = song;
+        diskSongs[0].play();
+        songNameDisk1=songName
+        diskSongs[0].onended(playNext);
+      }
+      //Adds song to disk1
+      else if (diskSongs.length == 1){
+        diskSongs[1] = song;
+        diskSongs[1].play();
+        songNameDisk2=songName
+        diskSongs[1].onended(playNext);
+      }
+      //Adds song to the queue
+      else{
+        queue[queue.length] = loadSound(song.url);
+        //Adds song to the  the visual queue
+        const songInQueue = document.createElement('li');
+        songInQueue.classList.add('queue-item');
+        let text = document.createTextNode(songName);
+        songInQueue.appendChild(text);
+        visualQueue.appendChild(songInQueue);
+      }
+    }
+  }
+  if (queue.length == 0 && diskSongs.length == 0) {
+    console.log("Music does not exist")
+  }
+});
+
+
+/*lista.addEventListener("click", function(e) {
   let songName = e.target.textContent;
   for (const song of songsDatabase) {
     if (song.url.split('\/')[1] === songName) {
@@ -444,7 +605,7 @@ lista.addEventListener("click", function(e) {
   if (queue.length == 0) {
     console.log("Music does not exist")
   }
-});
+});*/
 //Jumps song to the next in queue
 function jumpSong() {
   if (queue.length > 1) {
