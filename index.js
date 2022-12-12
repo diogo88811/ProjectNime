@@ -238,12 +238,13 @@ function draw() {
   
 
   //Song name under disk1
-  push();
+  /*push();
   translate(windowWidth *0.15, windowHeight*0.20);
   rotate(90);
   fill(255,255,255)
   text(songNameDisk1,0,0);
-  pop();
+  pop();*/
+  
   
   //Song name under disk 2
   push();
@@ -293,6 +294,48 @@ function draw() {
   rotate(rotate2);
   image(disk1, 0, 0, 0.25 * windowHeight, 0.25 * windowHeight);
   pop()
+
+  let angleBetweenLetters = 270 / songNameDisk1.length;
+  let radius = 70;
+  console.log(angleBetweenLetters)
+  push();
+  translate((2 * windowWidth) / 8, 0.3 * windowHeight)        // move to circle's center
+  rotate(rotate1);
+  rotate(radians(0));  
+  textSize(28)       // rotate to where text starts
+  for (let i=0; i<songNameDisk1.length; i++) {   // go through each letter in the text
+    push();
+    rotate(i * angleBetweenLetters);
+    //console.log(i * angleBetweenLetters)   // rotate to angle
+    translate(0,-radius);              // and translate to edge of circle
+    fill(255);
+    noStroke();
+    text(songNameDisk1[i], 0,0);                 // draw character at location
+    pop();
+  }
+  pop();
+
+
+angleBetweenLetters = 270 / songNameDisk2.length;
+  console.log(angleBetweenLetters)
+  push();
+  translate((2 * windowWidth) / 8, (1 - 0.3) * windowHeight)        // move to circle's center
+  rotate(rotate1);
+  rotate(radians(0));  
+  textSize(28)       // rotate to where text starts
+  for (let i=0; i<songNameDisk2.length; i++) {   // go through each letter in the text
+    push();
+    rotate(i * angleBetweenLetters);
+    //console.log(i * angleBetweenLetters)   // rotate to angle
+    translate(0,-radius);              // and translate to edge of circle
+    fill(255);
+    noStroke();
+    text(songNameDisk2[i], 0,0);                 // draw character at location
+    pop();
+  }
+  pop();
+
+
 
   //ICONS
   //Volume1
