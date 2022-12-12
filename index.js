@@ -46,6 +46,8 @@ const searchInput = document.getElementById("search");
 const lista = document.getElementById("list");
 const visualQueue = document.getElementById("queueList");
 
+let isSkipping = false;
+
 function preload() {
   disk1 = loadImage('Pictures/DJDisk.png');
   disk2 = loadImage('Pictures/DJDisk.png');
@@ -89,25 +91,43 @@ function setup() {
   changeBtnSize = [0.1 * windowWidth, 0.1 * windowHeight];
 
   //Change Music
-  changeBtn1 = createButton("SKIP1");
+  changeBtn1 = createButton("");
   changeBtn1.position(windowWidth/2 - changeBtnSize[0]/2 ,0.01 * windowHeight);
+  changeBtn1.style("background-image", "url('/Pictures/skipIcon3.png')")
+  changeBtn1.style("background-size", "40%")
+  changeBtn1.style("background-position", "center center")
+  changeBtn1.style("background-repeat", "no-repeat")
   changeBtn1.size(changeBtnSize[0], changeBtnSize[1]);
   changeBtn1.mousePressed(button1Pressed);
   changeBtn1.mouseReleased(button1Released);
+  changeBtn1.touchStarted(button1Pressed);
+  changeBtn1.touchEnded(button1Released);
   changeBtn1.addClass("skipButton1");
 
-  changeBtn2 = createButton("SKIP2");
+  changeBtn2 = createButton("");
   changeBtn2.position(0.01 * windowHeight, windowHeight/2 - changeBtnSize[1]/2);
+  changeBtn2.style("background-image", "url('/Pictures/skipIcon3.png')")
+  changeBtn2.style("background-size", "40%")
+  changeBtn2.style("background-position", "center center")
+  changeBtn2.style("background-repeat", "no-repeat")
   changeBtn2.size(changeBtnSize[0], changeBtnSize[1]);
   changeBtn2.mousePressed(button2Pressed);
   changeBtn2.mouseReleased(button2Released);
+  changeBtn2.touchStarted(button2Pressed);
+  changeBtn2.touchEnded(button2Released);
   changeBtn2.addClass("skipButton2");
 
-  changeBtn3 = createButton("SKIP3");
+  changeBtn3 = createButton("");
   changeBtn3.position(windowWidth/2 - changeBtnSize[0]/2, windowHeight - changeBtnSize[1] - 0.01 * windowHeight);
+  changeBtn3.style("background-image", "url('/Pictures/skipIcon3.png')")
+  changeBtn3.style("background-size", "40%")
+  changeBtn3.style("background-position", "center center")
+  changeBtn3.style("background-repeat", "no-repeat")
   changeBtn3.size(changeBtnSize[0], changeBtnSize[1]);
   changeBtn3.mousePressed(button3Pressed);
   changeBtn3.mouseReleased(button3Released);
+  changeBtn3.touchStarted(button3Pressed);
+  changeBtn3.touchEnded(button3Released);
   changeBtn3.addClass("skipButton3");
 
   light = new Light(20);
@@ -145,6 +165,8 @@ function setup() {
   //SOUND EFFECTS
   beat1Button= createButton("")
   beat1Button.position(0.28 * windowWidth, 0.45 * windowHeight)
+  beat1Button.touchStarted(beat1Play);
+  beat1Button.touchEnded(beat1Play);
   beat1Button.mousePressed(beat1Play)
   beat1Button.style("transform", "rotate(90deg)")
   beat1Button.style("background-image", "url('/Pictures/Beat.png')")
@@ -155,7 +177,8 @@ function setup() {
   
   beat2Button= createButton("")
   beat2Button.position(0.28 * windowWidth, 0.51 * windowHeight)
-  beat2Button.mousePressed(beat2Play)
+  beat2Button.touchStarted(beat2Play);
+  beat2Button.touchEnded(beat2Play);
   beat2Button.style("transform", "rotate(90deg)")
   beat2Button.style("background-image", "url('/Pictures/Beat.png')")
   beat2Button.style("background-size", "60%")
@@ -165,7 +188,8 @@ function setup() {
 
   kickButton= createButton("")
   kickButton.position(0.26 * windowWidth, 0.45 * windowHeight)
-  kickButton.mousePressed(kickPlay)
+  kickButton.touchStarted(kickPlay);
+  kickButton.touchEnded(kickPlay);
   kickButton.style("transform", "rotate(90deg)")
   kickButton.style("background-image", "url('/Pictures/Kick.png')")
   kickButton.style("background-size", "80%")
@@ -175,7 +199,8 @@ function setup() {
 
   SirenButton= createButton("")
   SirenButton.position(0.26 * windowWidth, 0.51 * windowHeight)
-  SirenButton.mousePressed(sirenPlay)
+  SirenButton.touchStarted(sirenPlay);
+  SirenButton.touchEnded(sirenPlay);
   SirenButton.style("transform", "rotate(90deg)")
   SirenButton.style("background-image", "url('/Pictures/airHorn.png')")
   SirenButton.style("background-size", "50%")
@@ -282,6 +307,16 @@ function draw() {
   image(volumeIcon, 0, 0, 15,15);
   pop();
 
+  if(button1_pressed && button2_pressed && button3_pressed){
+    if(queue.length > 0){
+      playNext(queue[0])
+      isSkipping = true
+    }
+    else{
+      console.log("queue is fucked up")
+    }
+  }
+
 }
 
 function typeMusicEvent() {
@@ -324,7 +359,28 @@ function playNext(song) {
       songNameDisk2 = ""
     }
   }
+  else if(isSkipping){
 
+    if (sliderTransition.value()<=0.5) {
+      diskSongs[0].stop();
+      diskSongs[0] = song;
+      queue.splice(0, 1);
+      diskSongs[0].play();
+      diskSongs[0].onended(playNext);
+      songNameDisk1 = diskSongs[0].url.split('\/')[1]
+      visualQueue.removeChild(visualQueue.firstChild);
+    } 
+    else{
+      diskSongs[1].stop();
+      diskSongs[1] = song;
+      queue.splice(0, 1);
+      diskSongs[1].play();
+      diskSongs[1].onended(playNext);
+      songNameDisk2 = diskSongs[1].url.split('\/')[1]
+      visualQueue.removeChild(visualQueue.firstChild);
+    }
+      isSkipping = false;
+  }
   else {
     if (diskSongs[0].url.split('\/')[1] == songName) {
       diskSongs[0] = queue[0];
@@ -604,59 +660,6 @@ lista.addEventListener ("click", function(e) {
     console.log("Music does not exist")
   }
 });
-
-
-/*lista.addEventListener("click", function(e) {
-  let songName = e.target.textContent;
-  for (const song of songsDatabase) {
-    if (song.url.split('\/')[1] === songName) {
-      //Adds song to the queue
-      queue[queue.length] = loadSound(song.url);
-
-      //Adds song to the  the visual queue
-      const songInQueue = document.createElement('li');
-      songInQueue.classList.add('queue-item');
-      let text = document.createTextNode(songName);
-      songInQueue.appendChild(text);
-      visualQueue.appendChild(songInQueue);
-
-    }
-  }
-  if (queue.length == 0) {
-    console.log("Music does not exist")
-  }
-});*/
-//Jumps song to the next in queue
-function jumpSong() {
-  if (queue.length > 1) {
-    queue[0].stop();
-    queue.splice(0, 1);
-    visualQueue.removeChild(visualQueue.firstChild);
-    if (queue.length == 0)
-      console.log("Queue reached the end")
-    else {
-      queue[0].play();
-    }
-  } else if (queue.length == 1) {
-    queue[0].stop();
-    queue.splice(0, 1);
-    console.log("Queue reached the end")
-  } else {
-    console.log("Queue is empty")
-  }
-}
-/*
-//Plays current songs in queue
-function playSongs() {
-  if (queue.length == 0)
-    console.log("Queue is empty")
-  else if (queue[0].isPlaying()) {
-    console.log("Music is already playing")
-  } else {
-    queue[0].play();
-    visualQueue.removeChild(visualQueue.firstChild);
-  }
-}*/
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////KEYBOARD/////////////////////////////////////
 
