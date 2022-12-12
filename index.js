@@ -134,32 +134,32 @@ function setup() {
 
   //Transition
   sliderTransition = createSlider(0, 1, 0.5, 0.01);
-  sliderTransition.position((0.5 * windowWidth) / 8, 0.5 * windowHeight);
   sliderTransition.style("width", 0.2 * windowHeight);
-  sliderTransition.style("transform", "rotate(90deg)")
+  sliderTransition.style("transform", "rotate(90deg)");
+  sliderTransition.position(0.1*windowWidth, 0.5*windowHeight);
   sliderTransition.addClass("slider");
   sliderTransition.mousePressed(sliderTransition)
 
   //DISK 1 COMPONENTS
   sliderRate1 = createSlider(0, 2, 1, 0.01);
-  sliderRate1.position((1.5 * windowWidth) / 8, 0.1 * windowHeight);
   sliderRate1.style("width", 0.2 * windowHeight);
+  sliderRate1.position(0.2 * windowWidth, 0.06 * windowHeight);
   sliderRate1.addClass("slider");
 
   sliderVolume1 = createSlider(0, 1, 1, 0.01);
-  sliderVolume1.position((1.5 * windowWidth) / 8, 0.12 * windowHeight);
   sliderVolume1.style("width", 0.2 * windowHeight);
+  sliderVolume1.position(0.2 * windowWidth, 0.12 * windowHeight);
   sliderVolume1.addClass("slider");
 
   //DISK 2 COMPONENTS
   sliderRate2 = createSlider(0, 2, 1, 0.01);
-  sliderRate2.position((1.5 * windowWidth) / 8, (1 - 0.1) * windowHeight);
   sliderRate2.style("width", 0.2 * windowHeight);
+  sliderRate2.position(0.2 * windowWidth, windowHeight - 0.06 * windowHeight);
   sliderRate2.addClass("slider");
 
   sliderVolume2 = createSlider(0, 1, 1, 0.01);
-  sliderVolume2.position((1.5 * windowWidth) / 8, (1 - 0.12) * windowHeight);
   sliderVolume2.style("width", 0.2 * windowHeight);
+  sliderVolume2.position(0.2 * windowWidth , windowHeight - 0.12 * windowHeight);
   sliderVolume2.addClass("slider");
 
   //SOUND EFFECTS
@@ -223,6 +223,8 @@ function draw() {
   stroke(0);
   background(60, 64, 72);
 
+  drawBase();
+
   //Next song in queue
   if(queue.length>0){
     songNameNextQueue = queue[0].url.split('\/')[1];
@@ -283,13 +285,13 @@ function draw() {
   push()
   translate((2 * windowWidth) / 8, 0.3 * windowHeight)
   rotate(rotate1);
-  image(disk1, 0, 0, 0.28 * windowHeight, 0.28 * windowHeight);
+  image(disk1, 0, 0, 0.25 * windowHeight, 0.25 * windowHeight);
   pop()
 
   push()
   translate((2 * windowWidth) / 8, (1 - 0.3) * windowHeight)
   rotate(rotate2);
-  image(disk1, 0, 0, 0.28 * windowHeight, 0.28 * windowHeight);
+  image(disk1, 0, 0, 0.25 * windowHeight, 0.25 * windowHeight);
   pop()
 
   //ICONS
@@ -316,9 +318,6 @@ function draw() {
       console.log("queue is fucked up")
     }
   }
-  drawBase();
-
-
 }
 
 function typeMusicEvent() {
@@ -451,9 +450,11 @@ function drawBase(){
 
   push();
   square = color(0,0,0);
-  square.setAlpha(0.25);
+  square.setAlpha(50);
   fill(square);
-  rect(30, 20, 55, 55);
+  //rect(0.2 * windowWidth, 0.09 * windowHeight - 50,  0.2 * windowHeight + 8, 100);
+  //rect(0,0, 0.2 * windowHeight, 60);
+  rect(0.1*windowWidth + 60 ,0.5*windowHeight - (0.2 * windowHeight)/2 , 60, 0.21 * windowHeight);
   pop();
 }
 
