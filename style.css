@@ -55,7 +55,6 @@ html, body {
   /* Styles the whole slider */
   .slider {
     -webkit-appearance: none;
-    width: 100px;
     height: 4px;
     background: black;
     outline: none;
