@@ -191,7 +191,7 @@ function setup() {
   kickButton.touchStarted(kickPlay);
   kickButton.touchEnded(kickPlay);
   kickButton.style("transform", "rotate(90deg)")
-  kickButton.style("background-image", "url('/Pictures/Kick.png')")
+  kickButton.style("background-image", "url('Pictures/Kick.png')")
   kickButton.style("background-size", "80%")
   kickButton.style("background-position", "center center")
   kickButton.style("background-repeat", "no-repeat")
@@ -202,7 +202,7 @@ function setup() {
   SirenButton.touchStarted(sirenPlay);
   SirenButton.touchEnded(sirenPlay);
   SirenButton.style("transform", "rotate(90deg)")
-  SirenButton.style("background-image", "url('/Pictures/airHorn.png')")
+  SirenButton.style("background-image", "url('Pictures/airHorn.png')")
   SirenButton.style("background-size", "50%")
   SirenButton.style("background-position", "center center")
   SirenButton.style("background-repeat", "no-repeat")
@@ -316,6 +316,8 @@ function draw() {
       console.log("queue is fucked up")
     }
   }
+  drawBase();
+
 
 }
 
@@ -445,6 +447,15 @@ function updateSound(transaction, volume1, volume2, rate1, rate2) {
   }
 }
 
+function drawBase(){
+
+  push();
+  square = color(0,0,0);
+  square.setAlpha(0.25);
+  fill(square);
+  rect(30, 20, 55, 55);
+  pop();
+}
 
 function middleSection() {
 

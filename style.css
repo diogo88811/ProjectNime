@@ -118,13 +118,13 @@ html, body {
     width: 100%; /* Full-width */
     height:50%;
     color: white;
-    font-size: 16px;
-    border-radius: 15px;
+    font-size: 14px;
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 3px solid black; /* Add a grey border */
     margin-bottom: 0; /* Add some space below the input */
-    background: black;
+    background: rgba(0, 0, 0, 0.25);
 }
+
 #clear{
   position: absolute;
   top:0%;
@@ -177,7 +177,7 @@ html, body {
   margin: 5px;
   border: 3px solid black;
   border-radius: 8px;
-  background: rgb(60, 64, 72); /* Old browsers */
+  background: rgba(0, 0, 0, 0.25); /* Old browsers */
   cursor: pointer;
   user-select: none;
 }
@@ -214,25 +214,26 @@ html, body {
     width: 100%;
     line-height: 50px;
     margin: 5px;
-    border: 1px solid #aaa;
+    border: 1px solid black;
     border-radius: 8px;
-    background: rgb(60, 64, 72); /* Old browsers */
+    background: rgba(0, 0, 0,0.25); /* Old browsers */
     cursor: pointer;
-    box-shadow: 2px 2px 3px #666;
+    box-shadow: 2px 2px 3px black;
     user-select: none;
 }
 
 
 li:hover {
-    border-color: #777;
-    box-shadow: 3px 3px 5px #333;
-    background: #eeeeee; /* Old browsers */
+    border-color: black;
+    box-shadow: 3px 3px 5px black;
+    background: rgba(0, 0, 0, 0.25); /* Old browsers */
 }
 
 
  li:active {
-    background: #eee;
-    box-shadow: inset 0 1px 1px #666;
+    background: rgba(0, 0, 0, 0.25);
+    border: black;
+    box-shadow: inset 0 1px 1px black;
 }
 
 
