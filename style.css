@@ -52,6 +52,80 @@ html, body {
   transform: translateY(1px);
 }
 
+.sirene{
+  background-image: url('/Pictures/airHorn.png');
+  background-size: 60%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: rotate(90deg);
+  background-color: grey;
+  border: 3px solid black;
+  border-radius: 1px;
+  box-shadow: 0px 2px black;
+}
+
+.sirene:active{
+  transform: translateX(-1px) rotate(90deg);
+  background-color:rgba(0, 255, 0, 0.5);
+  box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.5);
+
+
+}
+
+.kick{
+  background-image: url('/Pictures/Kick.png');
+  background-size: 60%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: rotate(90deg);
+  background-color: grey;
+  border: 3px solid black;
+  border-radius: 1px;
+  box-shadow: 0px 2px black;
+}
+.kick:active{
+  transform: translateX(-1px) rotate(90deg);
+  background-color:rgba(255, 0, 0, 0.5);
+  box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.5);
+}
+
+.beat1{
+  background-image: url('/Pictures/Beat.png');
+  background-size: 60%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: rotate(90deg);
+  background-color: grey;
+  border: 3px solid black;
+  border-radius: 1px;
+  box-shadow: 0px 2px black;
+}
+
+.beat1:active{
+  background-color: grey;
+  transform: translateX(-1px) rotate(90deg);
+  background-color:rgba(255, 234, 0, 0.5);
+  box-shadow: 0px 0px 15px rgba(255, 234, 0, 0.5);
+}
+
+.beat2{
+  background-image: url('/Pictures/Beat.png');
+  background-size: 60%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: rotate(90deg);
+  background-color: grey;
+  border: 3px solid black;
+  border-radius: 1px;
+  box-shadow: 0px 2px black;
+}
+
+.beat2:active{
+  transform: translateX(-1px) rotate(90deg);
+  background-color:rgba(0, 100, 255, 0.5);
+  box-shadow: 0px 0px 15px rgba(0, 100, 255, 0.5);
+}
+
   /* Styles the whole slider */
   .slider {
     -webkit-appearance: none;
@@ -122,6 +196,7 @@ html, body {
     border: 3px solid black; /* Add a grey border */
     margin-bottom: 0; /* Add some space below the input */
     background: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
 }
 
 #clear{

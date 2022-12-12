@@ -164,48 +164,29 @@ function setup() {
 
   //SOUND EFFECTS
   beat1Button= createButton("")
-  beat1Button.position(0.28 * windowWidth, 0.45 * windowHeight)
+  beat1Button.position(0.26 * windowWidth, 0.5*windowHeight - windowHeight*0.05 -windowHeight*0.05/4);
   beat1Button.touchStarted(beat1Play);
-  beat1Button.touchEnded(beat1Play);
-  beat1Button.mousePressed(beat1Play)
-  beat1Button.style("transform", "rotate(90deg)")
-  beat1Button.style("background-image", "url('/Pictures/Beat.png')")
-  beat1Button.style("background-size", "60%")
-  beat1Button.style("background-position", "center center")
-  beat1Button.style("background-repeat", "no-repeat")
   beat1Button.size(windowHeight*0.05, windowHeight*0.05)
+  beat1Button.addClass("beat1");
+
   
   beat2Button= createButton("")
-  beat2Button.position(0.28 * windowWidth, 0.51 * windowHeight)
+  beat2Button.position(0.26 * windowWidth, 0.5*windowHeight + windowHeight*0.05/4);
   beat2Button.touchStarted(beat2Play);
-  beat2Button.touchEnded(beat2Play);
-  beat2Button.style("transform", "rotate(90deg)")
-  beat2Button.style("background-image", "url('/Pictures/Beat.png')")
-  beat2Button.style("background-size", "60%")
-  beat2Button.style("background-position", "center center")
-  beat2Button.style("background-repeat", "no-repeat")
   beat2Button.size(windowHeight*0.05, windowHeight*0.05)
+  beat2Button.addClass("beat2");
 
   kickButton= createButton("")
-  kickButton.position(0.26 * windowWidth, 0.45 * windowHeight)
+  kickButton.position(0.22 * windowWidth, 0.5*windowHeight + windowHeight*0.05/4);
   kickButton.touchStarted(kickPlay);
-  kickButton.touchEnded(kickPlay);
-  kickButton.style("transform", "rotate(90deg)")
-  kickButton.style("background-image", "url('Pictures/Kick.png')")
-  kickButton.style("background-size", "80%")
-  kickButton.style("background-position", "center center")
-  kickButton.style("background-repeat", "no-repeat")
   kickButton.size(windowHeight*0.05, windowHeight*0.05)
+  kickButton.addClass("kick");
+
 
   SirenButton= createButton("")
-  SirenButton.position(0.26 * windowWidth, 0.51 * windowHeight)
+  SirenButton.position(0.22 * windowWidth, 0.5*windowHeight - windowHeight*0.05 -windowHeight*0.05/4);
   SirenButton.touchStarted(sirenPlay);
-  SirenButton.touchEnded(sirenPlay);
-  SirenButton.style("transform", "rotate(90deg)")
-  SirenButton.style("background-image", "url('Pictures/airHorn.png')")
-  SirenButton.style("background-size", "50%")
-  SirenButton.style("background-position", "center center")
-  SirenButton.style("background-repeat", "no-repeat")
+  SirenButton.addClass("sirene");
   SirenButton.size(windowHeight*0.05, windowHeight*0.05)
 
 
@@ -223,7 +204,7 @@ function draw() {
   stroke(0);
   background(60, 64, 72);
 
-  drawBase();
+  //drawBase();
 
   //Next song in queue
   if(queue.length>0){
