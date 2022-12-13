@@ -34,6 +34,8 @@ var img;
 var particles = [];
 var fft;
 
+var count = 0;
+
 //Cenas Sobras
 const songsDatabase = []
 const soundEffectsDatabase = []
@@ -47,6 +49,7 @@ const lista = document.getElementById("list");
 const visualQueue = document.getElementById("queueList");
 
 let isSkipping = false;
+let preventSkip = true;
 
 function preload() {
   disk1 = loadImage('Pictures/DJDisk.png');
@@ -61,7 +64,7 @@ function preload() {
 
   //Load songs in local data base
   songsDatabase[0] = loadSound('Musicas/Phoenix RDC-Dureza.mp3');
-  songsDatabase[1] = loadSound('Musicas/ProfJam-Agua de Coco(Prod_Lhast).mp3');
+  songsDatabase[1] = loadSound('Musicas/ProfJam-Agua de Coco.mp3');
   songsDatabase[2] = loadSound('Musicas/Deu_Onda.mp3');
   songsDatabase[3] = loadSound('Musicas/Love_Tonight.mp3');
   songsDatabase[4] = loadSound('Musicas/Test.mp3');
@@ -98,8 +101,8 @@ function setup() {
   changeBtn1.style("background-position", "center center")
   changeBtn1.style("background-repeat", "no-repeat")
   changeBtn1.size(changeBtnSize[0], changeBtnSize[1]);
-  changeBtn1.mousePressed(button1Pressed);
-  changeBtn1.mouseReleased(button1Released);
+  //changeBtn1.mousePressed(button1Pressed);
+  //changeBtn1.mouseReleased(button1Released);
   changeBtn1.touchStarted(button1Pressed);
   changeBtn1.touchEnded(button1Released);
   changeBtn1.addClass("skipButton1");
@@ -111,8 +114,8 @@ function setup() {
   changeBtn2.style("background-position", "center center")
   changeBtn2.style("background-repeat", "no-repeat")
   changeBtn2.size(changeBtnSize[0], changeBtnSize[1]);
-  changeBtn2.mousePressed(button2Pressed);
-  changeBtn2.mouseReleased(button2Released);
+  //changeBtn2.mousePressed(button2Pressed);
+  //changeBtn2.mouseReleased(button2Released);
   changeBtn2.touchStarted(button2Pressed);
   changeBtn2.touchEnded(button2Released);
   changeBtn2.addClass("skipButton2");
@@ -124,8 +127,8 @@ function setup() {
   changeBtn3.style("background-position", "center center")
   changeBtn3.style("background-repeat", "no-repeat")
   changeBtn3.size(changeBtnSize[0], changeBtnSize[1]);
-  changeBtn3.mousePressed(button3Pressed);
-  changeBtn3.mouseReleased(button3Released);
+  //changeBtn3.mousePressed(button3Pressed);
+  //changeBtn3.mouseReleased(button3Released);
   changeBtn3.touchStarted(button3Pressed);
   changeBtn3.touchEnded(button3Released);
   changeBtn3.addClass("skipButton3");
@@ -189,15 +192,6 @@ function setup() {
   SirenButton.addClass("sirene");
   SirenButton.size(windowHeight*0.05, windowHeight*0.05)
 
-
-  //Cenas Sobras
-  //songNumberSobras = 0;
-  //jumpButton = createButton('Skip the Song');
-  //jumpButton.mousePressed(jumpSong);
-
-  //playSongsInQueue = createButton('Play Songs in queue')
-  //playSongsInQueue.mousePressed(playSongs)
-
 }
 
 function draw() {
@@ -217,24 +211,6 @@ function draw() {
     pop();
   }
   
-
-  //Song name under disk1
-  /*push();
-  translate(windowWidth *0.15, windowHeight*0.20);
-  rotate(90);
-  fill(255,255,255)
-  text(songNameDisk1,0,0);
-  pop();*/
-  
-  
-  //Song name under disk 2
-  push();
-  translate(windowWidth *0.15, windowHeight*0.65);
-  rotate(90);
-  fill(255,255,255)
-  text(songNameDisk2,0,0);
-  pop()
-
   //Middle Animation
   push();
   middleSection();
@@ -278,7 +254,6 @@ function draw() {
 
   let angleBetweenLetters = 270 / songNameDisk1.length;
   let radius = 70;
-  console.log(angleBetweenLetters)
   push();
   translate((2 * windowWidth) / 8, 0.3 * windowHeight)        // move to circle's center
   rotate(rotate1);
@@ -286,8 +261,7 @@ function draw() {
   textSize(28)       // rotate to where text starts
   for (let i=0; i<songNameDisk1.length; i++) {   // go through each letter in the text
     push();
-    rotate(i * angleBetweenLetters);
-    //console.log(i * angleBetweenLetters)   // rotate to angle
+    rotate(i * angleBetweenLetters);//rotate to angle
     translate(0,-radius);              // and translate to edge of circle
     fill(255);
     noStroke();
@@ -298,16 +272,14 @@ function draw() {
 
 
 angleBetweenLetters = 270 / songNameDisk2.length;
-  console.log(angleBetweenLetters)
   push();
   translate((2 * windowWidth) / 8, (1 - 0.3) * windowHeight)        // move to circle's center
-  rotate(rotate1);
+  rotate(rotate2);
   rotate(radians(0));  
   textSize(28)       // rotate to where text starts
   for (let i=0; i<songNameDisk2.length; i++) {   // go through each letter in the text
     push();
-    rotate(i * angleBetweenLetters);
-    //console.log(i * angleBetweenLetters)   // rotate to angle
+    rotate(i * angleBetweenLetters);// rotate to angle
     translate(0,-radius);              // and translate to edge of circle
     fill(255);
     noStroke();
@@ -333,16 +305,10 @@ angleBetweenLetters = 270 / songNameDisk2.length;
   image(volumeIcon, 0, 0, 15,15);
   pop();
 
-  if(button1_pressed && button2_pressed && button3_pressed){
-    if(queue.length > 0){
-      playNext(queue[0])
-      isSkipping = true
-    }
-    else{
-      console.log("queue is fucked up")
-    }
-  }
+  
+
 }
+
 
 function typeMusicEvent() {
   console.log('you are typing: ', this.value());
@@ -369,12 +335,20 @@ function beat2Play(){
 }
 
 //Automatic skip for when the song ends
+function timeout(millisecondsDuration)
+{
+  return new Promise((resolve) => {
+    setTimeout(resolve, millisecondsDuration);
+  })
+}
+async function sleep(){
+  await timeout(4000);
+}
 function playNext(song) {
   songName = song.url.split('\/')[1];
   if (queue.length == 0) {
     console.log("Queue is empty")
     songNameNextQueue = ""
-    
     if(diskSongs[0]!="" && diskSongs[0].url.split('\/')[1] == songName){
       diskSongs[0]=""
       songNameDisk1 = ""
@@ -384,29 +358,34 @@ function playNext(song) {
       songNameDisk2 = ""
     }
   }
-  else if(isSkipping){
-
+  else if(isSkipping && count <= 0){
+    count = 3;
+    console.log("skipping");
+    isSkipping = false;
     if (sliderTransition.value()<=0.5) {
+      console.log("< " + song.url)
       diskSongs[0].stop();
       diskSongs[0] = song;
       queue.splice(0, 1);
       diskSongs[0].play();
       diskSongs[0].onended(playNext);
-      songNameDisk1 = diskSongs[0].url.split('\/')[1]
+      songNameDisk1 = diskSongs[0].url.split('\/')[1];
       visualQueue.removeChild(visualQueue.firstChild);
+      sleep().then((message)=>console.log("sleep1"));
     } 
-    else{
+    else if(sliderTransition.value()>0.5){
+      console.log("> " + song.url)
       diskSongs[1].stop();
       diskSongs[1] = song;
       queue.splice(0, 1);
       diskSongs[1].play();
       diskSongs[1].onended(playNext);
-      songNameDisk2 = diskSongs[1].url.split('\/')[1]
+      songNameDisk2 = diskSongs[1].url.split('\/')[1];
       visualQueue.removeChild(visualQueue.firstChild);
-    }
-      isSkipping = false;
+      sleep().then((message)=>console.log("sleep2"));
+    } 
   }
-  else {
+  else{
     if (diskSongs[0].url.split('\/')[1] == songName) {
       diskSongs[0] = queue[0];
       queue.splice(0, 1);
@@ -427,28 +406,67 @@ function playNext(song) {
 
 }
 
+
 function button1Pressed() {
+  console.log("Button1 Pressed")
   button1_pressed = true;
+  if(button2_pressed && button3_pressed && button1_pressed){
+    if(queue.length > 0){
+      isSkipping = true
+      console.log("playNext called from button 1");
+      playNext(queue[0]);
+      
+    }
+    else{
+      console.log("queue is fucked up")
+    }
+  }
 }
 
 function button1Released() {
   button1_pressed = false;
+  count--;
+  console.log(count);
 }
 
 function button2Pressed() {
   button2_pressed = true;
+  if(button1_pressed && button3_pressed && button2_pressed){
+    if(queue.length > 0){
+      isSkipping = true
+      console.log("playNext called from button 2");
+      playNext(queue[0]);
+    }
+    else{
+      console.log("queue is fucked up")
+    }
+  }
 }
 
 function button2Released() {
   button2_pressed = false;
+  count--;
+  console.log(count);
 }
 
 function button3Pressed() {
   button3_pressed = true;
+  if(button1_pressed && button2_pressed && button3_pressed){
+    if(queue.length > 0){
+      isSkipping = true
+      console.log("playNext called from button 1");
+      playNext(queue[0]);
+    }
+    else{
+      console.log("queue is fucked up")
+    }
+  }
 }
 
 function button3Released() {
   button3_pressed = false;
+  count--;
+  console.log(count);
 }
 
 function updateSound(transaction, volume1, volume2, rate1, rate2) {
