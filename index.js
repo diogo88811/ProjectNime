@@ -325,7 +325,7 @@ angleBetweenLetters = 270 / songNameDisk2.length;
   pop();
   //queue Icon
   push();
-  translate((windowWidth - (windowWidth / 3) + 10) , windowHeight * 0.29);
+  translate((windowWidth - (windowWidth / 3) + 20) , windowHeight * 0.29);
   rotate(-90);
   image(queueIcon,0,0,40,40);
   pop();
