@@ -39,6 +39,7 @@ var count = 0;
 //Cenas Sobras
 const songsDatabase = []
 const soundEffectsDatabase = []
+let queueDiv = document.getElementById("nextInQueue");
 //Names of the songs
 let songNameDisk1 = "";
 let songNameDisk2 = "";
@@ -92,6 +93,7 @@ function setup() {
   fft = new p5.FFT();
 
   changeBtnSize = [0.1 * windowWidth, 0.1 * windowHeight];
+
 
   //Change Music
   changeBtn1 = createButton("");
@@ -204,9 +206,10 @@ function draw() {
   if(queue.length>0){
     songNameNextQueue = queue[0].url.split('\/')[1];
     push();
-    translate(0.32* windowWidth, 0.43 * windowHeight);
+    translate(0.33* windowWidth, 0.36 * windowHeight);
+    textSize(20)
     rotate(90);
-    fill(255,255,255)
+    fill(128,128,128)
     text(songNameNextQueue,0,0);
     pop();
   }

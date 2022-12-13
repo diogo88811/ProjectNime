@@ -225,6 +225,24 @@ color: white;
     border-radius: 8px;
 }
 
+.queueName{
+  top:47%;
+  left:25%;
+  width: 17%;
+  height:5%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  transform: rotate(90deg);
+  text-align: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 8px;
+  background: rgba(0, 0, 0,0.25); /* Old browsers */
+  box-shadow: 2px 2px 3px black;
+  user-select: none;
+}
+
 #clear{
   position: absolute;
   top:0%;
