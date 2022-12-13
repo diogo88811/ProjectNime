@@ -11,7 +11,7 @@ var sliderVolume2;
 var sliderTransition;
 
 //icons
-var volumeIcon;
+var icons =  [];
 
 //Change music buttons
 var changeBtn1;
@@ -54,7 +54,8 @@ let preventSkip = true;
 function preload() {
   disk1 = loadImage('Pictures/DJDisk.png');
   disk2 = loadImage('Pictures/DJDisk.png');
-  volumeIcon = loadImage('Pictures/volume_icon.png');
+  icons[0] = loadImage('Pictures/volume_icon.png');
+  icons[1] = loadImage('Pictures/Metronomopng.png');
 
   soundFormats('mp3', 'ogg');
 
@@ -293,19 +294,31 @@ angleBetweenLetters = 270 / songNameDisk2.length;
   //ICONS
   //Volume1
   push();
-  translate((1.4 * windowWidth) / 8, 0.12 * windowHeight);
+  translate(0.19 * windowWidth, 0.06 * windowHeight + 3);
   rotate(90);
-  image(volumeIcon, 0, 0, 15,15);
+  image(icons[1], 0, 0, 16,16);
   pop();
 
   //Volume2
   push();
-  translate((1.4 * windowWidth) / 8, (1 - 0.12) * windowHeight);
+  translate(0.19 * windowWidth, 0.12 * windowHeight + 2);
   rotate(90);
-  image(volumeIcon, 0, 0, 15,15);
+  image(icons[0], 0, 0, 15,15);
   pop();
 
-  
+  //Volume2
+  push();
+  translate(0.19 * windowWidth, windowHeight - 0.06 * windowHeight + 3);
+  rotate(90);
+  image(icons[1], 0, 0, 16,16);
+  pop();
+
+  //Volume2
+  push();
+  translate(0.19 * windowWidth, windowHeight - 0.12 * windowHeight + 2);
+  rotate(90);
+  image(icons[0], 0, 0, 15,15);
+  pop();
 
 }
 
