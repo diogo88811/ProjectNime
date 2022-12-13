@@ -58,7 +58,7 @@ function preload() {
   disk1 = loadImage('Pictures/DJDisk.png');
   disk2 = loadImage('Pictures/DJDisk.png');
   icons[0] = loadImage('Pictures/volume_icon.png');
-  icons[1] = loadImage('Pictures/Metronomopng.png');
+  icons[1] = loadImage('Pictures/Metronomo2.png');
   volumeIcon = loadImage('Pictures/volume_icon.png');
   queueIcon = loadImage('Pictures/queueIcon.png')
 
@@ -209,13 +209,14 @@ function draw() {
 
   //Next song in queue
   if(queue.length>0){
-    songNameNextQueue = queue[0].url.split('\/')[1];
+    songNameNextQueue1 = queue[0].url.split('\/')[1];
+    songNameNextQueue2 = songNameNextQueue1.split('\.')[0];
     push();
     translate(0.33* windowWidth, 0.36 * windowHeight);
     textSize(20)
     rotate(90);
     fill(128,128,128)
-    text(songNameNextQueue,0,0);
+    text(songNameNextQueue2,0,0);
     pop();
   }
   
@@ -303,7 +304,7 @@ angleBetweenLetters = 270 / songNameDisk2.length;
   push();
   translate(0.19 * windowWidth, 0.06 * windowHeight + 3);
   rotate(90);
-  image(icons[1], 0, 0, 16,16);
+  image(icons[1], 0, 0, 50,50);
   pop();
 
   //Volume2
@@ -317,7 +318,7 @@ angleBetweenLetters = 270 / songNameDisk2.length;
   push();
   translate(0.19 * windowWidth, windowHeight - 0.06 * windowHeight + 3);
   rotate(90);
-  image(icons[1], 0, 0, 16,16);
+  image(icons[1], 0, 0, 50,50);
   pop();
 
   //Volume2
@@ -373,6 +374,7 @@ async function sleep(){
 }
 function playNext(song) {
   songName = song.url.split('\/')[1];
+  songName2 = songName.split('\.')[0];
   if (queue.length == 0) {
     console.log("Queue is empty")
     songNameNextQueue = ""
@@ -396,7 +398,8 @@ function playNext(song) {
       queue.splice(0, 1);
       diskSongs[0].play();
       diskSongs[0].onended(playNext);
-      songNameDisk1 = diskSongs[0].url.split('\/')[1];
+      songName = diskSongs[0].url.split('\/')[1];
+      songNameDisk1 = songName.split('\.')[0];
       visualQueue.removeChild(visualQueue.firstChild);
       sleep().then((message)=>console.log("sleep1"));
     } 
@@ -407,7 +410,8 @@ function playNext(song) {
       queue.splice(0, 1);
       diskSongs[1].play();
       diskSongs[1].onended(playNext);
-      songNameDisk2 = diskSongs[1].url.split('\/')[1];
+      songName = diskSongs[1].url.split('\/')[1];
+      songNameDisk2 = songName.split('\.')[0];
       visualQueue.removeChild(visualQueue.firstChild);
       sleep().then((message)=>console.log("sleep2"));
     } 
@@ -418,7 +422,8 @@ function playNext(song) {
       queue.splice(0, 1);
       diskSongs[0].play();
       diskSongs[0].onended(playNext);
-      songNameDisk1 = diskSongs[0].url.split('\/')[1]
+      songName = diskSongs[0].url.split('\/')[1];
+      songNameDisk1 = songName.split('\.')[0];
       visualQueue.removeChild(visualQueue.firstChild);
     } 
     else if (diskSongs[1].url.split('\/')[1] == songName){
@@ -426,7 +431,8 @@ function playNext(song) {
       queue.splice(0, 1);
       diskSongs[1].play();
       diskSongs[1].onended(playNext);
-      songNameDisk2 = diskSongs[1].url.split('\/')[1]
+      songName = diskSongs[1].url.split('\/')[1];
+      songNameDisk2 = songName.split('\.')[0];
       visualQueue.removeChild(visualQueue.firstChild);
     }
   }
@@ -672,7 +678,8 @@ function setList(results) {
     const resultItem = document.createElement('li')
     resultItem.classList.add('result-item')
     const splittedText = (song.url.split('\/'))[1]
-    let text = document.createTextNode(splittedText)
+    splittedText2 = splittedText.split('\.')[0];
+    let text = document.createTextNode(splittedText2)
 
     resultItem.appendChild(text)
     lista.appendChild(resultItem)
@@ -710,7 +717,7 @@ function clearList() {
 lista.addEventListener ("click", function(e) {
   let songName = e.target.textContent;
   for (const song of songsDatabase) {
-    if (song.url.split('\/')[1] === songName) {
+    if (song.url.split('\/')[1].split('\.')[0] === songName) {
       //Adds song to the disk 0
       if(diskSongs.length == 0 || diskSongs[0] == ""){
         diskSongs[0] = song;
